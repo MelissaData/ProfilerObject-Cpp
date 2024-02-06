@@ -27,7 +27,7 @@ class ManifestConfig {
 
 ######################### Config ###########################
 
-$RELEASE_VERSION = '2023.12'
+$RELEASE_VERSION = '2024.01'
 $ProductName = "profiler_data"
 
 # Uses the location of the .ps1 file 
