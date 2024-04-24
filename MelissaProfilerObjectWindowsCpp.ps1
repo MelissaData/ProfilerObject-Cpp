@@ -1,10 +1,11 @@
-﻿# Name:    MelissaProfilerObjectWindowsCpp
+# Name:    MelissaProfilerObjectWindowsCpp
 # Purpose: Use the MelissaUpdater to make the MelissaProfilerObjectWindowsCpp code usable
 
 ######################### Parameters ##########################
 
 param(
     $file = '""',
+    $dataPath = '', 
     $license = '',
     [switch]$quiet = $false
     )
@@ -27,25 +28,34 @@ class ManifestConfig {
 
 ######################### Config ###########################
 
-$RELEASE_VERSION = '2024.01'
+$RELEASE_VERSION = '2024.Q2'
 $ProductName = "profiler_data"
 
 # Uses the location of the .ps1 file 
-# Modify this if you want to use 
 $CurrentPath = $PSScriptRoot
 Set-Location $CurrentPath
 $ProjectPath = "$CurrentPath\MelissaProfilerObjectWindowsCpp"
-$DataPath = "$ProjectPath\Data"
-$BuildPath = "$ProjectPath\Build"
 
 # Configure the path to vcvarsall.bat if needed
 $CmdPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat"
 
-If (!(Test-Path $DataPath)) {
+$BuildPath = "$ProjectPath\Build"
+if (!(Test-Path $BuildPath)) {
+  New-Item -Path $ProjectPath -Name 'Build' -ItemType "directory"
+}
+
+if ([string]::IsNullOrEmpty($dataPath)) {
+  $DataPath = "$ProjectPath\Data" 
+}
+
+if (!(Test-Path $DataPath) -and ($DataPath -eq "$ProjectPath\Data")) {
   New-Item -Path $ProjectPath -Name 'Data' -ItemType "directory"
 }
-If (!(Test-Path $BuildPath)) {
-  New-Item -Path $ProjectPath -Name 'Build' -ItemType "directory"
+elseif (!(Test-Path $DataPath) -and ($DataPath -ne "$ProjectPath\Data")) {
+  Write-Host "`nData file path does not exist. Please check that your file path is correct."
+  Write-Host "`nAborting program, see above.  Press any button to exit.`n"
+  $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") > $null
+  exit
 }
 
 $DLLs = @(
@@ -168,7 +178,7 @@ if ([string]::IsNullOrEmpty($license) ) {
 
 # Check for License from Environment Variables 
 if ([string]::IsNullOrEmpty($License) ) {
-  $License = $env:MD_LICENSE # Get-ChildItem -Path Env:\MD_LICENSE   #[System.Environment]::GetEnvironmentVariable('MD_LICENSE')
+  $License = $env:MD_LICENSE 
 }
 
 if ([string]::IsNullOrEmpty($License)) {
@@ -176,12 +186,26 @@ if ([string]::IsNullOrEmpty($License)) {
   Exit
 }
 
+# Get data file path (either from parameters or user input)
+if ($DataPath -eq "$ProjectPath\Data") {
+  $dataPathInput = Read-Host "Please enter your data files path directory if you have already downloaded the release zip.`nOtherwise, the data files will be downloaded using the Melissa Updater (Enter to skip)"
+
+  if (![string]::IsNullOrEmpty($dataPathInput)) {
+    if (!(Test-Path $dataPathInput)) {
+      Write-Host "`nData file path does not exist. Please check that your file path is correct."
+      Write-Host "`nAborting program, see above.  Press any button to exit.`n"
+      $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") > $null
+      exit
+    }
+    else {
+      $DataPath = $dataPathInput
+    }
+  }
+}
+
 # Use Melissa Updater to download data file(s) 
 # Download data file(s) 
-DownloadDataFiles -license $License     # comment out this line if using DQS Release
-
-# Set data file(s) path
-#$DataPath = "C:\\Program Files\\Melissa DATA\\DQT\\Data"			# uncomment this line and change to your DQS Release data file(s) directory
+DownloadDataFiles -license $License # Comment out this line if using own release
 
 # Download dll(s)
 DownloadDlls - license $License
