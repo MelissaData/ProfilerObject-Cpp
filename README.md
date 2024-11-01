@@ -34,7 +34,7 @@ And return
 
 ## Tested Environments
 - Windows 10 64-bit Microsoft Visual C++ 14.34, Powershell 5.1
-- Melissa data files for 2024-Q3
+- Melissa data files for 2024-Q4
 - Nmake 14.34
 - Visual Studio 2022 Developer Command Prompt v17.4.2 64-bit
 
@@ -75,8 +75,8 @@ The console will then prompt you with the following warning shown in the image b
 
 #### Download this project
 ```
-$ git clone https://github.com/MelissaData/ProfilerObject-Cpp
-$ cd ProfilerObject-Cpp
+git clone https://github.com/MelissaData/ProfilerObject-Cpp
+cd ProfilerObject-Cpp
 ```
 
 #### Set up Melissa Updater
@@ -108,24 +108,24 @@ Parameters:
 
     The script will prompt the user for a csv file, then use the provided csv file to test Profiler Object.  For example:
     ```
-    $ .\MelissaProfilerObjectWindowsCpp.ps1
+    .\MelissaProfilerObjectWindowsCpp.ps1
     ```
     For quiet mode:
     ```
-    $ .\MelissaProfilerObjectWindowsCpp.ps1 -quiet
+    .\MelissaProfilerObjectWindowsCpp.ps1 -quiet
     ```
 - Command Line 
 
     You can pass a csv file and a license string into the `-file` and `-license` parameters respectively to test Profiler Object. For example:
     ```
-    $ .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv"
-    $ .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv" -license "<your_license_string>"
+    .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv"
+    .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv" -license "<your_license_string>"
     ```
 
-	For quiet mode:
+    For quiet mode:
     ```
-    $ .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv" -quiet
-    $ .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv" -license "<your_license_string>" -quiet
+    .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv" -quiet
+    .\MelissaProfilerObjectWindowsCpp.ps1 -file "MelissaProfilerObjectSampleInput.csv" -license "<your_license_string>" -quiet
     ```
 This is the expected output from a successful setup for interactive mode:
 
