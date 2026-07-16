@@ -75,8 +75,8 @@ The console will then prompt you with the following warning shown in the image b
 
 #### Download this project
 ```
-git clone https://git.melissadata.com/dtgroup/melissadataobjectexamples/cpp/melissaprofilerobjectwindowscpp.git
-cd melissaprofilerobjectwindowscpp
+git clone https://github.com/MelissaData/ProfilerObject-Cpp
+cd ProfilerObject-Cpp
 ```
 
 #### Set up Melissa Updater
